@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>NEXORA — Business Dashboard</title>
+<style>
+:root{--bg:#04060f;--c:#22d3ee;--v:#8b5cf6;--m:#e879f9;--t:#e6ecff;--mu:#8b97b8;--bd:rgba(130,160,255,.18);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+body{font:15px/1.55 "Segoe UI",system-ui,sans-serif;background:radial-gradient(1000px 560px at 85% -10%,#1b1457 0,transparent 60%),radial-gradient(800px 500px at -10% 110%,#06324a 0,transparent 60%),var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden}
+.grid{position:fixed;inset:0;background-image:linear-gradient(rgba(34,211,238,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.06) 1px,transparent 1px);background-size:44px 44px;animation:gm 16s linear infinite;-webkit-mask-image:radial-gradient(ellipse at center,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse at center,#000 25%,transparent 78%);pointer-events:none}
+@keyframes gm{to{background-position:44px 44px}}
+#intro{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px;background:rgba(4,6,15,.6);backdrop-filter:blur(6px);transition:opacity .7s,transform .7s}
+#intro.out{opacity:0;transform:scale(1.04);pointer-events:none}
+.logo{font-size:clamp(44px,10vw,88px);font-weight:700;letter-spacing:.14em;background:linear-gradient(90deg,var(--c),#3b82f6,var(--v),var(--m));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(34,211,238,.55))}
+.sub{color:var(--mu);max-width:480px}
+.btn{cursor:pointer;border:1px solid rgba(34,211,238,.5);background:linear-gradient(135deg,rgba(34,211,238,.2),rgba(139,92,246,.25));color:var(--t);padding:9px 18px;border-radius:10px;font:inherit;transition:.25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 22px rgba(34,211,238,.45)}.btn.ghost{background:transparent;border-color:var(--bd)}.btn.sm{padding:3px 9px;font-size:13px}.btn.red{border-color:rgba(232,121,249,.5)}
+#app{position:relative;z-index:1;display:grid;grid-template-columns:210px 1fr;min-height:100vh}
+nav{position:sticky;top:0;height:100vh;padding:20px 12px;border-right:1px solid var(--bd);background:rgba(6,10,28,.6);backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:6px}
+nav .logo{font-size:24px;margin:0 0 14px 8px;filter:none}
+nav button{all:unset;cursor:pointer;padding:11px 12px;border-radius:10px;color:var(--mu);border:1px solid transparent;transition:.25s}
+nav button:hover{color:var(--t);background:rgba(255,255,255,.05)}nav button.on{color:var(--t);border-color:rgba(34,211,238,.45);background:rgba(34,211,238,.1);box-shadow:0 0 18px rgba(34,211,238,.25)}
+main{padding:22px 26px 60px;min-width:0}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px}.top h1{font-size:24px}
+.chip{border:1px solid rgba(232,121,249,.5);color:var(--m);padding:2px 10px;border-radius:99px;font-size:12px;vertical-align:middle}
+.lead{color:var(--mu);margin-bottom:16px}
+select,input{font:inherit;color:var(--t);background:rgba(8,12,34,.8);border:1px solid var(--bd);border-radius:8px;padding:7px 9px;width:100%}.top select{width:auto}
+.card{background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--bd);border-radius:14px;padding:16px;backdrop-filter:blur(8px);transition:.3s;min-width:0}
+.card:hover{border-color:rgba(34,211,238,.4);box-shadow:0 0 26px rgba(34,211,238,.12)}.card h3{font-size:16px;margin-bottom:8px}
+.g{display:grid;gap:14px;margin-bottom:14px}.k{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.c2{grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr))}
+.kpi span{color:var(--mu);font-size:13px}.kpi b{display:block;font-size:28px;color:var(--a,var(--c));text-shadow:0 0 18px var(--a,var(--c))}.kpi small{color:var(--mu)}
+.fm{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}.fm h3,.fm .row{grid-column:1/-1}.fm label{font-size:13px;color:var(--mu);display:block}.row{display:flex;gap:8px;flex-wrap:wrap}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mu);font-weight:500}td select{padding:3px 6px}
+.ch{width:100%;height:auto}.gl{stroke:rgba(255,255,255,.07)}.tx{fill:var(--mu);font-size:11px}
+.ln{fill:none;stroke-width:2.5;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.5s ease forwards;filter:drop-shadow(0 0 5px currentColor)}@keyframes dr{to{stroke-dashoffset:0}}
+.bar{transform-box:fill-box;transform-origin:bottom;animation:gr .8s ease backwards}@keyframes gr{from{transform:scaleY(0)}}
+.lg{display:flex;gap:14px;flex-wrap:wrap;color:var(--mu);font-size:13px;margin-top:4px}.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.tag{padding:1px 8px;border-radius:99px;border:1px solid var(--bd);font-size:12px}.bad,.High{color:var(--m);border-color:var(--m)}.ok,.Low{color:var(--c);border-color:var(--c)}.Medium{color:var(--v);border-color:var(--v)}
+ul.l{list-style:none;padding:0;display:grid;gap:8px}ul.l li{padding:8px 10px;border-left:2px solid var(--c);background:rgba(255,255,255,.03);border-radius:6px}ul.l li.w{border-color:var(--m)}
+.rec{border-left:3px solid var(--v)}.rec p{margin:3px 0;color:var(--mu)}.rec b{color:var(--t)}
+input[type=range]{padding:0;accent-color:var(--c)}.mu{color:var(--mu)}.up{color:var(--c)}.dn{color:var(--m)}
+@media(max-width:860px){#app{grid-template-columns:1fr}nav{height:auto;flex-direction:row;overflow-x:auto;padding:8px;z-index:5;top:env(safe-area-inset-top,0px)}nav .logo,.ft{display:none}nav button{white-space:nowrap}main{padding:16px 12px 50px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ln{stroke-dashoffset:0}}
+</style></head><body>
+<div class="grid"></div>
+<div id="intro"><div class="logo">NEXORA</div><p class="sub">A simple tool to plan marketing campaigns, track tasks, and check "what if" business choices. All numbers are made-up sample data.</p><button class="btn" onclick="enter()">Enter dashboard</button><p class="sub" style="font-size:12px">Built by Agriya Rajsi Sinha · B.Tech MAE, IGDTUW</p></div>
+<div id="app" hidden><nav id="nav"></nav><main id="main"></main></div>
+<script>
+const $=s=>document.querySelector(s),KEY='nexora_simple_v1',PAL=['#22d3ee','#3b82f6','#8b5cf6','#e879f9'],ML=['Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'];
+const sum=(a,k)=>a.reduce((s,x)=>s+(k?+x[k]:+x),0),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const iso=d=>new Date(Date.now()+d*864e5).toISOString().slice(0,10),TODAY=iso(0);
+const FM={m:v=>{const a=Math.abs(v);return(v<0?'-':'')+'₹'+(a>=1e7?(a/1e7).toFixed(2)+' Cr':a>=1e5?(a/1e5).toFixed(2)+' L':Math.round(a).toLocaleString('en-IN'))},p:v=>v.toFixed(1)+'%',n:v=>Math.round(v).toLocaleString('en-IN')};
+const rn=i=>{let x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+const MD=Array.from({length:12},(_,m)=>({e:Math.round(340000*(1+.025*m)*(.9+.2*rn(m))),s:Math.round(210000*(1+.02*m)*(.9+.2*rn(m+9)))}));
+const seed=()=>({camps:[[1,'New Product Ads','Get more sign-ups','Instagram',12000,11200,5400,310],[2,'Festive Discount Email','Get repeat buyers','Email',4000,2900,3100,260],[3,'Free Webinar','Get interested leads','YouTube',8000,5100,1500,95],[4,'Combo Offer Ads','Sell more to clients','Google Ads',4000,4300,2600,120],[5,'Brand Awareness','Reach more people','Instagram',5000,3900,4200,70],[6,'Influencer Trial','Get first sales','WhatsApp',7000,6500,2300,80]].map(a=>({id:a[0],name:a[1],goal:a[2],ch:a[3],budget:a[4],spent:a[5],clicks:a[6],sales:a[7]})),
+tasks:[[1,'Finish ad plan',-3,'In Progress','High'],[2,'Check supplier contract',-8,'Todo','Medium'],[3,'Update price list',5,'In Progress','Medium'],[4,'Prepare welcome kit',12,'Todo','Low'],[5,'Stock check',-12,'Done','High'],[6,'Write landing page text',2,'Done','Medium'],[7,'Make staff duty chart',-2,'Todo','High'],[8,'Make new ad images',20,'Todo','Low']].map(a=>({id:a[0],t:a[1],due:iso(a[2]),st:a[3],pri:a[4]}))});
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}S=S||seed();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let P=6,V='home';const L={a:{n:'Plan A',b:20,c:0},b:{n:'Plan B',b:-20,c:-5},V:500};
+const late=t=>t.st!='Done'&&t.due<TODAY;
+const fin=()=>{const m=MD.slice(12-P),e=m.map(x=>x.e),s=m.map(x=>x.s);return{l:ML.slice(12-P),e,s,E:sum(e),C:sum(s)}};
+const cst=l=>{const sp=sum(l,'spent'),sa=sum(l,'sales');return{sp,sa,cl:sum(l,'clicks'),cpa:sa?sp/sa:0}};
+/* charts */
+const lg=ss=>`<div class="lg">${ss.map(s=>`<span><i style="background:${s.c}"></i>${s.n}</span>`).join('')}</div>`;
+function line(l,ss,h=210){const W=600,p=34,al=ss.flatMap(s=>s.d),mn=Math.min(...al)*.9,mx=Math.max(...al)*1.05,X=i=>p+i*(W-2*p)/Math.max(l.length-1,1),Y=v=>h-24-(v-mn)/(mx-mn||1)*(h-44);
+return`<svg viewBox="0 0 ${W} ${h}" class="ch">`+[0,1,2,3].map(i=>`<line class="gl" x1="${p}" x2="${W-p}" y1="${20+i*(h-44)/3}" y2="${20+i*(h-44)/3}"/>`).join('')+ss.map(s=>`<path class="ln" pathLength="1" style="stroke:${s.c};color:${s.c}" d="${s.d.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join('')}"/>`).join('')+l.map((t,i)=>`<text class="tx" x="${X(i)}" y="${h-6}" text-anchor="middle">${t}</text>`).join('')+`</svg>`+lg(ss)}
+function bars(l,ss,h=210){const W=600,p=30,mx=Math.max(...ss.flatMap(s=>s.d),1)*1.1,g=(W-2*p)/l.length,bw=Math.min(34,g/(ss.length+.8));
+return`<svg viewBox="0 0 ${W} ${h}" class="ch">`+[0,1,2,3].map(i=>`<line class="gl" x1="${p}" x2="${W-p}" y1="${20+i*(h-44)/3}" y2="${20+i*(h-44)/3}"/>`).join('')+l.map((t,i)=>ss.map((s,j)=>{const hh=Math.max(s.d[i]/mx*(h-44),0);return`<rect class="bar" rx="3" style="animation-delay:${(i*ss.length+j)*60}ms" fill="${s.c}" x="${p+i*g+g/2-ss.length*bw/2+j*bw}" y="${h-24-hh}" width="${bw-3}" height="${hh}"/>`}).join('')+`<text class="tx" x="${p+i*g+g/2}" y="${h-6}" text-anchor="middle">${t}</text>`).join('')+`</svg>`+lg(ss)}
+const kpi=(l,v,f,s,a)=>`<div class="card kpi" style="--a:${a}"><span>${l}</span><b class="cu" data-v="${v}" data-f="${f}">0</b><small>${s}</small></div>`;
+function cu(){document.querySelectorAll('.cu').forEach(e=>{const v=+e.dataset.v,f=FM[e.dataset.f],t0=performance.now();(function s(t){const k=Math.min((t-t0)/900,1);e.textContent=f(v*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(s)})(t0)})}
+/* suggestions */
+function recs(){const R=[],ok=S.camps.filter(c=>c.spent>0&&c.sales>0);
+if(ok.length<2)R.push({o:'Not enough campaign results yet.',w:'Campaigns with results: '+ok.length,a:'Add sales numbers to at least 2 campaigns.',g:'A fair comparison'});
+else{const av=sum(ok,'spent')/sum(ok,'sales');ok.forEach(c=>{const x=c.spent/c.sales;if(x>av*1.3)R.push({o:`"${c.name}" costs more per sale than average.`,w:`Cost per sale ${FM.m(x)}, average ${FM.m(av)}`,a:'Move some of its budget to a cheaper campaign, or try a new ad.',g:'Lower cost per sale'});else if(x<av*.75)R.push({o:`"${c.name}" is cheaper per sale than average.`,w:`Cost per sale ${FM.m(x)}, average ${FM.m(av)}`,a:'Try giving it a little more budget and watch the cost.',g:'More sales for the same money'})})}
+S.camps.filter(c=>c.spent>c.budget).forEach(c=>R.push({o:`"${c.name}" spent more than its budget.`,w:`Spent ${FM.m(c.spent)}, budget ${FM.m(c.budget)}`,a:'Stop or reduce spending on it, or raise its budget on purpose.',g:'Spending under control'}));
+const lt=S.tasks.filter(late);if(lt.length)R.push({o:`${lt.length} task(s) are late.`,w:'Late: '+lt.map(t=>t.t).slice(0,3).join(', '),a:'Finish them first, or change their deadlines.',g:'No delays'});
+return R}
+const attn=()=>{const a=[];S.tasks.filter(late).forEach(t=>a.push(`Late task: ${t.t} (was due ${t.due})`));S.camps.filter(c=>c.spent>c.budget).forEach(c=>a.push(`Over budget: ${c.name}`));return a};
+/* forms */
+const I=(n,l,t='text',x='')=>`<label>${l}<input name="${n}" type="${t}" ${x}></label>`,SEL=(n,l,o)=>`<label>${l}<select name="${n}">${o.map(v=>`<option>${v}</option>`).join('')}</select></label>`;
+function sv(k,e,num){e.preventDefault();const o=Object.fromEntries(new FormData(e.target)),id=+o.id;num.forEach(n=>o[n]=+o[n]||0);if(id){const i=S[k].findIndex(x=>x.id==id);S[k][i]={...S[k][i],...o,id}}else{o.id=Date.now();S[k].unshift(o)}save();render();return false}
+function ed(k,id){const o=S[k].find(x=>x.id==id),f=$('#f'+k);Object.keys(o).forEach(n=>f.elements[n]&&(f.elements[n].value=o[n]));f.scrollIntoView({behavior:'smooth',block:'center'})}
+function del(k,id){const key=k+id;if(window.PD!=key){window.PD=key;render();return}window.PD=null;S[k]=S[k].filter(x=>x.id!=id);save();render()}
+function setSt(id,v){S.tasks.find(t=>t.id==id).st=v;save();render()}
+const acts=(k,id)=>`<button class="btn sm ghost" onclick="ed('${k}',${id})">Edit</button> <button class="btn sm red ghost" onclick="del('${k}',${id})">${window.PD==k+id?'Click again to confirm':'Delete'}</button>`;
+const per=()=>`<select onchange="P=+this.value;render()">${[3,6,12].map(n=>`<option value="${n}" ${n==P?'selected':''}>Last ${n} months</option>`).join('')}</select>`;
+/* pages */
+function vHome(){const f=fin(),pr=f.E-f.C,dn=S.tasks.filter(t=>t.st=='Done').length,at=attn(),rc=recs();
+return`<div class="g k">${kpi('Money earned',f.E,'m','Total sales income','var(--c)')}${kpi('Money spent',f.C,'m','All business costs','var(--m)')}${kpi('Profit',pr,'m','Profit margin '+(pr/f.E*100).toFixed(1)+'%','var(--v)')}${kpi('Tasks done',dn,'n','out of '+S.tasks.length+' tasks','var(--c)')}</div>
+<div class="card" style="margin-bottom:14px"><h3>Money earned vs money spent</h3>${line(f.l,[{n:'Earned',c:PAL[0],d:f.e},{n:'Spent',c:PAL[3],d:f.s}])}<p class="mu">If the blue line stays above the pink line, the business is making profit.</p></div>
+<div class="g c2"><div class="card"><h3>Things to check</h3>${at.length?`<ul class="l">${at.map(a=>`<li class="w">${esc(a)}</li>`).join('')}</ul>`:'<p class="mu">Nothing urgent right now.</p>'}</div>
+<div class="card"><h3>Suggestions <span class="chip">made by simple rules, not AI</span></h3>${rc.length?rc.slice(0,4).map(r=>`<div class="card rec" style="margin-bottom:8px"><p><b>What we saw:</b> ${esc(r.o)}</p><p><b>Why:</b> ${esc(r.w)}</p><p><b>You could:</b> ${esc(r.a)}</p><p><b>Goal:</b> ${esc(r.g)}</p></div>`).join(''):'<p class="mu">No suggestions right now.</p>'}</div></div>`}
+function vCamp(){const c=cst(S.camps);
+return`<form class="card fm" id="fcamps" onsubmit="return sv('camps',event,['budget','spent','clicks','sales'])"><h3>Add or edit a campaign</h3><input type="hidden" name="id">${I('name','Campaign name','text','required')}${I('goal','What do you want from it?')}${SEL('ch','Where is it running?',['Instagram','Email','Google Ads','YouTube','WhatsApp'])}${I('budget','Budget (₹)','number','min=0 required')}${I('spent','Spent so far (₹)','number','min=0')}${I('clicks','Clicks','number','min=0')}${I('sales','Sales or sign-ups','number','min=0')}<div class="row"><button class="btn">Save campaign</button><button type="reset" class="btn ghost">Clear</button></div></form>
+<div class="g k">${kpi('Total spent',c.sp,'m','on all campaigns','var(--m)')}${kpi('Sales / sign-ups',c.sa,'n','from all campaigns','var(--c)')}${kpi('Cost per sale',c.cpa,'m','spent ÷ sales (lower is better)','var(--v)')}</div>
+<div class="card" style="margin-bottom:14px"><h3>All campaigns</h3><div class="tw"><table><tr><th>Name</th><th>Where</th><th>Budget</th><th>Spent</th><th>Clicks</th><th>Sales</th><th>Cost per sale</th><th></th></tr>${S.camps.map(x=>`<tr><td>${esc(x.name)}${x.spent>x.budget?' <span class="tag bad">Over budget</span>':''}</td><td>${x.ch}</td><td>${FM.m(x.budget)}</td><td>${FM.m(x.spent)}</td><td>${x.clicks}</td><td>${x.sales}</td><td>${x.sales?FM.m(x.spent/x.sales):'–'}</td><td>${acts('camps',x.id)}</td></tr>`).join('')}</table></div></div>
+<div class="card"><h3>Which campaign costs less per sale?</h3>${bars(S.camps.map(x=>x.name.split(' ')[0]),[{n:'Cost per sale (₹)',c:PAL[0],d:S.camps.map(x=>x.sales?x.spent/x.sales:0)}])}</div>`}
+function vTask(){const dn=S.tasks.filter(t=>t.st=='Done').length,lt=S.tasks.filter(late).length;
+return`<form class="card fm" id="ftasks" onsubmit="return sv('tasks',event,[])"><h3>Add or edit a task</h3><input type="hidden" name="id">${I('t','Task','text','required')}${I('due','Deadline','date','required')}${SEL('st','Status',['Todo','In Progress','Done'])}${SEL('pri','Priority',['High','Medium','Low'])}<div class="row"><button class="btn">Save task</button><button type="reset" class="btn ghost">Clear</button></div></form>
+<div class="g k">${kpi('Done',dn,'n','tasks finished','var(--c)')}${kpi('Pending',S.tasks.length-dn,'n','tasks still open','var(--v)')}${kpi('Late',lt,'n','past the deadline','var(--m)')}</div>
+<div class="card"><h3>All tasks</h3><div class="tw"><table><tr><th>Task</th><th>Deadline</th><th>Priority</th><th>Status</th><th></th></tr>${S.tasks.map(t=>`<tr><td>${esc(t.t)}${late(t)?' <span class="tag bad">Late</span>':''}</td><td>${t.due}</td><td><span class="tag ${t.pri}">${t.pri}</span></td><td><select onchange="setSt(${t.id},this.value)">${['Todo','In Progress','Done'].map(s=>`<option ${s==t.st?'selected':''}>${s}</option>`).join('')}</select></td><td>${t.st!='Done'?`<button class="btn sm" onclick="setSt(${t.id},'Done')">Mark done</button> `:''}${acts('tasks',t.id)}</td></tr>`).join('')}</table></div></div>`}
+function calc(s,B){const bf=1+s.b/100,cv=B.cv*Math.pow(bf,.7),rev=B.R-B.cv*L.V+cv*L.V,cost=B.C-B.M+B.M*bf+(B.C-B.M)*s.c/100;return{rev,cost,pr:rev-cost,cv}}
+function wi(){const f=fin(),c=cst(S.camps),B={R:f.E,C:f.C,M:c.sp,cv:c.sa},b0={rev:B.R,cost:B.C,pr:B.R-B.C,cv:B.cv},A=calc(L.a,B),Z=calc(L.b,B),rows=[['Money earned','rev'],['Money spent','cost'],['Profit','pr'],['Sales / sign-ups','cv']],pc=(x,y)=>y?(x/y-1)*100:0,cl=(v,g)=>`<span class="${v*g>=0?'up':'dn'}">${v>=0?'+':''}${v.toFixed(1)}%</span>`,fm=k=>k=='cv'?FM.n:FM.m,d=A.pr-Z.pr,w=Math.abs(d)<Math.abs(b0.pr)*.01?'Both plans give almost the same profit':(d>0?L.a.n:L.b.n)+' gives more profit';
+$('#wi').innerHTML=`<div class="g c2"><div class="card"><h3>Now vs your plans</h3>${bars(['Earned','Spent','Profit'],[{n:'Now',c:PAL[1],d:[b0.rev,b0.cost,b0.pr]},{n:L.a.n,c:PAL[0],d:[A.rev,A.cost,A.pr]},{n:L.b.n,c:PAL[3],d:[Z.rev,Z.cost,Z.pr]}])}</div><div class="card"><h3>Numbers</h3><div class="tw"><table><tr><th></th><th>Now</th><th>${esc(L.a.n)}</th><th>Change</th><th>${esc(L.b.n)}</th><th>Change</th></tr>${rows.map(([n,k])=>`<tr><td>${n}</td><td>${fm(k)(b0[k])}</td><td>${fm(k)(A[k])}</td><td>${cl(pc(A[k],b0[k]),k=='cost'?-1:1)}</td><td>${fm(k)(Z[k])}</td><td>${cl(pc(Z[k],b0[k]),k=='cost'?-1:1)}</td></tr>`).join('')}</table></div></div></div>
+<div class="card"><h3>Result: ${w}</h3><p>${esc(L.a.n)} changes profit by ${FM.m(A.pr-b0.pr)} and ${esc(L.b.n)} by ${FM.m(Z.pr-b0.pr)}. The difference between them is ${FM.m(Math.abs(d))}.</p><p class="mu">This is only an estimate from sample data. It is not a real prediction.</p></div>`}
+function lc(s,k,v){L[s][k]=+v;$('#o'+s+k).textContent=v;wi()}
+function vWi(){const sc=s=>`<div class="card"><h3>${L[s].n}</h3>${[['b','Change in ad budget',-50,100],['c','Change in other costs',-30,30]].map(([k,n,lo,hi])=>`<label>${n}: <b id="o${s}${k}">${L[s][k]}</b>%<input type="range" min="${lo}" max="${hi}" value="${L[s][k]}" oninput="lc('${s}','${k}',this.value)"></label>`).join('')}</div>`;
+return`<div class="g c2">${sc('a')}${sc('b')}</div><div class="card" style="margin-bottom:14px"><label style="max-width:340px">₹ earned per sale (estimate): <input type="number" min="1" value="${L.V}" oninput="L.V=+this.value||1;wi()"></label><p class="mu">How it works: spending more on ads brings more sales, but each extra rupee works a little less well than the one before.</p></div><div id="wi"></div>`}
+const VW=[['home','Home','Your business at a glance',vHome],['camp','Campaigns','Your ads and how they perform',vCamp],['task','Tasks','Your to-do list',vTask],['wi','What-If','Try a change and see the estimate',vWi]];
+function render(){$('#nav').innerHTML='<div class="logo">NEXORA</div>'+VW.map(v=>`<button class="${v[0]==V?'on':''}" onclick="V='${v[0]}';render();scrollTo(0,0)">${v[1]}</button>`).join('')+'<p class="mu ft" style="margin-top:auto;font-size:12px;padding:0 8px">Built by Agriya · IGDTUW</p>';
+const v=VW.find(x=>x[0]==V);$('#main').innerHTML=`<div class="top"><h1>${v[1]} <span class="chip">Sample data</span></h1>${V=='home'||V=='wi'?per():''}</div><p class="lead">${v[2]}</p>`+v[3]();if(V=='wi')wi();cu()}
+function enter(){$('#intro').classList.add('out');$('#app').hidden=false;render();setTimeout(()=>$('#intro').remove(),800)}
+</script></body></html>
